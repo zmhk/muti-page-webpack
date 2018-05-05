@@ -1,0 +1,33 @@
+{
+  "name": "muti-page-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zmhk/muti-page-webpack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zmhk/muti-page-webpack/issues"
+  },
+  "homepage": "https://github.com/zmhk/muti-page-webpack#readme",
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "react": "^16.3.2"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.7.0",
+    "webpack-merge": "^4.1.2"
+  }
+}
