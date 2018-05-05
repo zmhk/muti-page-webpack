@@ -75,4 +75,4 @@ const pages = [
 // module.exports = pages.map(page => {
 //     return merge(baseConfig, page);
 // })
-module.exports =merge([baseConfig].concat(pages))
+module.exports = merge([baseConfig].concat(pages))
