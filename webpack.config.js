@@ -1,31 +1,58 @@
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 const baseConfig = {
     entry: {
-        jquery: ['jquery']
+        vendor: ['jquery']
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].[chunkhash].js'
     },
+    resolve:{
+       alias:{
+           jquery$:path.resolve(__dirname,'src/common/libs/jquery.min.js')
+       }
+    },
     module: {
         rules: [{
-            test: /\.css$/,
+            test: /\.js$/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: ['env']
+                }
+            }
+        },
+        {
+            test: /\.(css|less)$/,
             use: [
                 MiniCssExtractPlugin.loader,
-                "css-loader"
+                "css-loader",
+                {
+                    loader: "postcss-loader",
+                    options: {
+                        ident: 'postcss',
+                        plugins: [
+                            require('postcss-cssnext')(),
+                            // require('autoprefixer')(),
+                            require('cssnano')()
+                        ]
+                    }
+                },
+                "less-loader"
             ]
         }]
     },
     plugins: [
-        new CleanWebpackPlugin(path.resolve(__dirname, 'dist')),
         new MiniCssExtractPlugin({
             filename: 'css/[name][hash].css'
+        }),
+        new webpack.ProvidePlugin({
+            $:'jquery'
         })
     ]
 }
