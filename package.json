@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/zmhk/muti-page-webpack#readme",
   "dependencies": {
+    "jquery": "^3.3.1",
     "react": "^16.3.2"
   },
   "devDependencies": {

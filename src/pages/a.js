@@ -1,4 +1,4 @@
-// import $ from 'jquery'
+import $ from 'jquery'
 import moduleA from '../components/module'
 import '../css/a.less'
 

@@ -12,10 +12,11 @@ const baseConfig = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].[chunkhash].js'
     },
-    resolve:{
-       alias:{
-           jquery$:path.resolve(__dirname,'src/common/libs/jquery.min.js')
-       }
+    resolve: {
+        extensions: ['.js', 'less', 'css']
+        // alias:{
+        //     jquery$:path.resolve(__dirname,'src/common/libs/jquery.min.js')
+        // }
     },
     module: {
         rules: [{
@@ -27,37 +28,62 @@ const baseConfig = {
                 }
             }
         },
-        {
-            test: /\.(css|less)$/,
-            use: [
-                MiniCssExtractPlugin.loader,
-                "css-loader",
-                {
-                    loader: "postcss-loader",
-                    options: {
-                        ident: 'postcss',
-                        plugins: [
-                            require('postcss-cssnext')(),
-                            // require('autoprefixer')(),
-                            require('cssnano')()
-                        ]
-                    }
+            {
+                test: /\.(css|less)$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            ident: 'postcss',
+                            plugins: [
+                                require('postcss-cssnext')(),
+                                // require('autoprefixer')(),
+                                require('cssnano')()
+                            ]
+                        }
+                    },
+                    "less-loader"
+                ]
+            }]
+    },
+    optimization: {
+        runtimeChunk: {
+            name:'manifest'
+        },
+        splitChunks: {
+            chunks: 'all',
+            minSize: 30000,
+            minChunks: 2,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                commons: {
+                    name: 'commons',
+                    chunks: 'all',
+                    minChunks: 2,
+                    enforce: true
                 },
-                "less-loader"
-            ]
-        }]
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                }
+            }
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'css/[name][hash].css'
-        }),
-        new webpack.ProvidePlugin({
-            $:'jquery'
         })
+        // new webpack.ProvidePlugin({
+        //     $:'jquery'
+        // })
     ]
 }
 
-const generatePage = ({ title = '', entry = '', template = './src/index.html', name = '', chunks = [] }) => {
+const generatePage = ({title = '', entry = '', template = './src/index.html', name = '', chunks = []}) => {
     return {
         entry,
         plugins: [
