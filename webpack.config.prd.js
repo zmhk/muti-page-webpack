@@ -1,7 +1,7 @@
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 const merge = require('webpack-merge');
-const common = require("./webpack.config");
+const common = require("./webpack.config.common");
 const webpack=require("webpack");
 module.exports = merge(common, {
     plugins: [
