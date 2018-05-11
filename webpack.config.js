@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 const baseConfig = {
+    entry:'babel-polyfill',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'js/[name].[hash].js'
