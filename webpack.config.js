@@ -100,7 +100,7 @@ const pages = [
     generatePage({
         title: 'page A',
         entry: {
-            a: './src/pages/a'
+            a: './src/js/a'
         },
         template:'./src/indexA.html',
         name: 'a',
@@ -109,7 +109,7 @@ const pages = [
     generatePage({
         title: 'page B',
         entry: {
-            b: './src/pages/b'
+            b: './src/js/b'
         },
         template:'./src/indexB.html',
         name: 'b',
@@ -118,7 +118,7 @@ const pages = [
     generatePage({
         title: 'page C',
         entry: {
-            c: './src/pages/c'
+            c: './src/js/c'
         },
         name: 'c',
         template:'./src/indexC.html',
