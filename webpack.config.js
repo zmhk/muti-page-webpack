@@ -5,12 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
 
 const baseConfig = {
-    entry: {
-        vendor: ['jquery']
-    },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name].[chunkhash].js'
+        filename: 'js/[name].[hash].js'
     },
     resolve: {
         extensions: ['.js', 'less', 'css']
@@ -50,15 +47,9 @@ const baseConfig = {
     },
     optimization: {
         runtimeChunk: {
-            name:'manifest'
+            name: 'manifest'
         },
         splitChunks: {
-            chunks: 'all',
-            minSize: 30000,
-            minChunks: 2,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            name: true,
             cacheGroups: {
                 commons: {
                     name: 'commons',
@@ -68,7 +59,9 @@ const baseConfig = {
                 },
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
-                    priority: -10
+                    name: 'vendors',
+                    chunks: 'all',
+                    priority: 2
                 }
             }
         }
@@ -76,10 +69,10 @@ const baseConfig = {
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'css/[name][hash].css'
+        }),
+        new webpack.ProvidePlugin({
+            $:'jquery'
         })
-        // new webpack.ProvidePlugin({
-        //     $:'jquery'
-        // })
     ]
 }
 
@@ -104,16 +97,18 @@ const pages = [
         entry: {
             a: './src/pages/a'
         },
+        template:'./src/indexA.html',
         name: 'a',
-        chunks: ['jquery', 'a']
+        chunks: ['manifest', 'vendors', 'commons', 'a']
     }),
     generatePage({
         title: 'page B',
         entry: {
             b: './src/pages/b'
         },
+        template:'./src/indexB.html',
         name: 'b',
-        chunks: ['jquery', 'b']
+        chunks: ['manifest', 'vendors', 'commons', 'b']
     }),
     generatePage({
         title: 'page C',
@@ -121,7 +116,8 @@ const pages = [
             c: './src/pages/c'
         },
         name: 'c',
-        chunks: ['jquery', 'c']
+        template:'./src/indexC.html',
+        chunks: ['manifest', 'vendors', 'commons', 'c']
     })
 ]
 
