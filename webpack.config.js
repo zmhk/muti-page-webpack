@@ -85,7 +85,11 @@ const generatePage = ({title = '', entry = '', template = './src/index.html', na
                 chunks,
                 template,
                 title,
-                filename: name + '.html'
+                filename: name + '.html',
+                minify:{
+                    removeComments:true,
+                    collapseWhitespace:true
+                }
             })
         ]
     }
