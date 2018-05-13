@@ -3,6 +3,7 @@ const OpenBrowserWebpackPlugin=require('open-browser-webpack-plugin');
 const common = require("./webpack.config.common");
 const path=require('path');
 module.exports = merge(common, {
+    mode:'development',
     output:{
         publicPath:'/'
     },
