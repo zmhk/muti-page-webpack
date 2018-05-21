@@ -8,13 +8,23 @@ const baseConfig = {
     entry: 'babel-polyfill',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name].[hash].js'
+        filename: 'js/[name].[hash].js',
+        libraryTarget: 'umd'
     },
     resolve: {
-        extensions: ['.js', 'less', 'css']
+        extensions: ['.js', 'less', 'css'],
         // alias:{
         //     jquery$:path.resolve(__dirname,'src/common/libs/jquery.min.js')
         // }
+    },
+    externals: {
+        // jquery: {
+        //     amd: 'jquery',
+        //     root: 'jQuery',
+        //     commonjs: 'jquery',
+        //     commonjs2: 'jquery'
+        // }
+        jquery:'jQuery'
     },
     module: {
         rules: [{
@@ -53,22 +63,22 @@ const baseConfig = {
                     name: 'images/[name].[hash].[ext]'
                 }
             }
-        },{
-            test:/\.(html|ejs)$/,
-            use:{
-                loader:'ejs-loader'
+        }, {
+            test: /\.(html|ejs)$/,
+            use: {
+                loader: 'ejs-loader'
             }
         }
-        // {
-        //     test:/\.html$/,
-        //     use:{
-        //         loader:'html-loader',
-        //         options:{
-        //             attrs:['img:src']
-        //         }
-        //     }
-        // }
-    ]
+            // {
+            //     test:/\.html$/,
+            //     use:{
+            //         loader:'html-loader',
+            //         options:{
+            //             attrs:['img:src']
+            //         }
+            //     }
+            // }
+        ]
     },
     optimization: {
         runtimeChunk: {
@@ -95,9 +105,9 @@ const baseConfig = {
         new MiniCssExtractPlugin({
             filename: 'css/[name][hash].css'
         }),
-        new webpack.ProvidePlugin({
-            $: 'jquery'
-        })
+        // new webpack.ProvidePlugin({
+        //     $: 'jquery'
+        // })
     ]
 }
 
