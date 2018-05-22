@@ -2,6 +2,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 const baseConfig = {
@@ -24,7 +25,7 @@ const baseConfig = {
         //     commonjs: 'jquery',
         //     commonjs2: 'jquery'
         // }
-        jquery:'jQuery'
+        jquery: 'jQuery'
     },
     module: {
         rules: [{
@@ -103,15 +104,19 @@ const baseConfig = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: 'css/[name][hash].css'
+            filename: 'css/[name].[hash].css'
         }),
+        new CopyWebpackPlugin([{
+            from: './src/common/base.js',
+            to: 'js/base.js'
+        }])
         // new webpack.ProvidePlugin({
         //     $: 'jquery'
         // })
     ]
 }
 
-const generatePage = ({ title = '', entry = '', template = './src/index.html', name = '', chunks = [] }) => {
+const setPageConfig = ({ title = '', entry = '', template = './src/index.html', name = '', chunks = [] }) => {
     return {
         entry,
         plugins: [
@@ -131,7 +136,7 @@ const generatePage = ({ title = '', entry = '', template = './src/index.html', n
 }
 
 const pages = [
-    generatePage({
+    setPageConfig({
         title: 'page A',
         entry: {
             a: './src/js/a'
@@ -140,7 +145,7 @@ const pages = [
         name: 'a',
         chunks: ['manifest', 'vendors', 'commons', 'a']
     }),
-    generatePage({
+    setPageConfig({
         title: 'page B',
         entry: {
             b: './src/js/b'
@@ -149,7 +154,7 @@ const pages = [
         name: 'b',
         chunks: ['manifest', 'vendors', 'commons', 'b']
     }),
-    generatePage({
+    setPageConfig({
         title: 'page C',
         entry: {
             c: './src/js/c'
